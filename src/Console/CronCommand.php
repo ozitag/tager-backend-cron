@@ -3,11 +3,12 @@
 namespace OZiTAG\Tager\Backend\Cron\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\App;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use OZiTAG\Tager\Backend\Cron\Enums\CronJobStatus;
 use OZiTAG\Tager\Backend\Cron\Models\TagerCronJob;
 use OZiTAG\Tager\Backend\Cron\Repositories\TagerCronJobRepository;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class CronCommand extends Command
 {
@@ -28,11 +29,11 @@ abstract class CronCommand extends Command
     /** @var int */
     private $logNum = 0;
 
-    public function __construct(TagerCronJobRepository $cronJobRepository)
+    public function __construct()
     {
         parent::__construct();
 
-        $this->cronJobRepository = $cronJobRepository;
+        $this->cronJobRepository = App::make(TagerCronJobRepository::class);
     }
 
     private function getCommand()
@@ -112,5 +113,4 @@ abstract class CronCommand extends Command
             $this->logNum = 0;
         }
     }
-
 }
