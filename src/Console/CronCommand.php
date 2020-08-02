@@ -29,6 +29,9 @@ abstract class CronCommand extends Command
     /** @var int */
     private $logNum = 0;
 
+    /** @var bool */
+    private $lineCompleted = true;
+
     public function __construct()
     {
         parent::__construct();
@@ -100,9 +103,14 @@ abstract class CronCommand extends Command
 
     protected function log($message, $lineComplete = true)
     {
-        $logMessage = date('d.m.Y H:i:s') . ' - ' . $message;
+        $prefix = ($this->lineCompleted ? date('d.m.Y H:i:s') . ' - ' : '');
+        $logMessage = $prefix . $message;
+
         if ($lineComplete) {
             $logMessage .= "\n";
+            $this->lineCompleted = true;
+        } else {
+            $this->lineCompleted = false;
         }
 
         echo $logMessage;
