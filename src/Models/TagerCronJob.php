@@ -22,7 +22,8 @@ class TagerCronJob extends Model
         'status',
         'begin_at',
         'end_at',
-        'output'
+        'output',
+        'error'
     ];
 
     protected static function boot()

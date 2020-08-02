@@ -22,6 +22,7 @@ class TagerCron extends Migration
             $table->dateTime('begin_at');
             $table->dateTime('end_at')->nullable();
             $table->longText('output')->nullable();
+            $table->longText('error')->nullable();
         });
     }
 
