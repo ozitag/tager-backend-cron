@@ -4,11 +4,11 @@ namespace OZiTAG\Tager\Backend\Cron\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\App;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use OZiTAG\Tager\Backend\Cron\Enums\CronJobStatus;
 use OZiTAG\Tager\Backend\Cron\Models\TagerCronJob;
 use OZiTAG\Tager\Backend\Cron\Repositories\TagerCronJobRepository;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class CronCommand extends Command
 {
@@ -94,12 +94,17 @@ abstract class CronCommand extends Command
             $this->onEnd();
         } catch (\Exception $exception) {
             $this->onError($exception);
+            throw $exception;
         }
     }
 
-    protected function log($message)
+    protected function log($message, $lineComplete = true)
     {
-        $logMessage = date('d.m.Y H:i:s') . ' - ' . $message . "\n";
+        $logMessage = date('d.m.Y H:i:s') . ' - ' . $message;
+        if ($lineComplete) {
+            $logMessage .= "\n";
+        }
+
         echo $logMessage;
 
         $this->log .= $logMessage;
