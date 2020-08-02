@@ -19,6 +19,15 @@ abstract class CronCommand extends Command
     /** @var TagerCronJob */
     private $model;
 
+    /** @var string */
+    private $log;
+
+    /** @var int */
+    protected $logSavePortion = 3;
+
+    /** @var int */
+    private $logNum = 0;
+
     public function __construct(TagerCronJobRepository $cronJobRepository)
     {
         parent::__construct();
@@ -26,17 +35,8 @@ abstract class CronCommand extends Command
         $this->cronJobRepository = $cronJobRepository;
     }
 
-    private function getConsoleOutput()
-    {
-        $log = ob_get_contents();
-        @ob_end_flush();
-        return $log;
-    }
-
     private function onStart()
     {
-        ob_start();
-
         $this->model = $this->cronJobRepository->fillAndSave([
             'class_name' => static::class,
             'signature' => $this->signature,
@@ -52,7 +52,7 @@ abstract class CronCommand extends Command
         $this->cronJobRepository->update([
             'status' => CronJobStatus::Completed,
             'end_at' => date('Y-m-d H:i:s'),
-            'output' => $this->getConsoleOutput()
+            'output' => $this->log
         ]);
     }
 
@@ -61,7 +61,7 @@ abstract class CronCommand extends Command
         $this->cronJobRepository->update([
             'status' => CronJobStatus::Failed,
             'end_at' => date('Y-m-d H:i:s'),
-            'output' => $this->getConsoleOutput(),
+            'output' => $this->log,
             'error' => (string)$exception
         ]);
     }
@@ -89,4 +89,22 @@ abstract class CronCommand extends Command
             $this->onError($exception);
         }
     }
+
+    protected function log($message)
+    {
+        $logMessage = date('d.m.Y H:i:s') . ' - ' . $message . "\n";
+        echo $logMessage;
+
+        $this->log .= $logMessage;
+
+        $this->logNum = $this->logNum + 1;
+
+        if ($this->logNum == $this->logSavePortion) {
+            $this->cronJobRepository->update([
+                'output' => $this->log
+            ]);
+            $this->logNum = 0;
+        }
+    }
+
 }
