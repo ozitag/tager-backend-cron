@@ -2,13 +2,13 @@
 
 namespace OZiTAG\Tager\Backend\Cron\Console;
 
-use Illuminate\Console\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Support\Facades\App;
+use OZiTAG\Tager\Backend\Core\Console\Command;
 use OZiTAG\Tager\Backend\Cron\Enums\CronJobStatus;
 use OZiTAG\Tager\Backend\Cron\Models\TagerCronJob;
 use OZiTAG\Tager\Backend\Cron\Repositories\TagerCronJobRepository;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class CronCommand extends Command
 {
