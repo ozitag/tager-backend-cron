@@ -2,6 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Cron\Console;
 
+use OZiTAG\Tager\Backend\Utils\Formatters\ExceptionFormatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Support\Facades\App;
@@ -72,7 +73,7 @@ abstract class CronCommand extends Command
             'status' => CronJobStatus::Failed,
             'end_at' => date('Y-m-d H:i:s'),
             'output' => $this->log,
-            'error' => (string)$exception
+            'error' => ExceptionFormatter::getFullExceptionInfo($exception)
         ]);
     }
 
