@@ -17,8 +17,8 @@ class TagerCronJob extends Model
      * @var array
      */
     protected $fillable = [
-        'class_name',
-        'signature',
+        'class',
+        'command',
         'status',
         'begin_at',
         'end_at',
@@ -31,7 +31,7 @@ class TagerCronJob extends Model
         parent::boot();
 
         static::addGlobalScope('order', function (Builder $builder) {
-            $builder->orderBy('start_at', 'desc');
+            $builder->orderBy('begin_at', 'desc');
         });
     }
 }

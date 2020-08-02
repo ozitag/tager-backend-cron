@@ -35,11 +35,17 @@ abstract class CronCommand extends Command
         $this->cronJobRepository = $cronJobRepository;
     }
 
+    private function getCommand()
+    {
+        $argv = isset($_SERVER['argv']) ? $_SERVER['argv'] : [];
+        return implode(' ', array_merge(['php'], $argv));
+    }
+
     private function onStart()
     {
         $this->model = $this->cronJobRepository->fillAndSave([
-            'class_name' => static::class,
-            'signature' => $this->signature,
+            'class' => static::class,
+            'command' => $this->getCommand(),
             'status' => CronJobStatus::Started,
             'begin_at' => date('Y-m-d H:i:s')
         ]);

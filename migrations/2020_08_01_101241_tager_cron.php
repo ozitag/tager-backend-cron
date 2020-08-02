@@ -16,8 +16,8 @@ class TagerCron extends Migration
         Schema::create('tager_cron_jobs', function (Blueprint $table) {
             $table->id();
 
-            $table->string('class_name');
-            $table->string('signature');
+            $table->string('command');
+            $table->string('class')->nullable();
             $table->string('status');
             $table->dateTime('begin_at');
             $table->dateTime('end_at')->nullable();
