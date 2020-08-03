@@ -22,23 +22,21 @@ abstract class CronCommand extends Command
     /** @var TagerCronJob */
     private $model;
 
-    /** @var string */
-    private $log;
-
-    /** @var int */
-    protected $logSavePortion = 3;
-
-    /** @var int */
-    private $logNum = 0;
-
-    /** @var bool */
-    private $lineCompleted = true;
 
     public function __construct()
     {
         parent::__construct();
 
         $this->cronJobRepository = App::make(TagerCronJobRepository::class);
+
+        $this->setLogCallback([$this, 'onSaveLog']);
+    }
+
+    protected function onSaveLog($log)
+    {
+        $this->cronJobRepository->update([
+            'output' => $log
+        ]);
     }
 
     private function getCommand()
@@ -100,32 +98,6 @@ abstract class CronCommand extends Command
         } catch (\Exception $exception) {
             $this->onError($exception);
             throw $exception;
-        }
-    }
-
-    protected function log($message, $lineComplete = true)
-    {
-        $prefix = ($this->lineCompleted ? DateHelper::getHumanDateTime() . ' - ' : '');
-        $logMessage = $prefix . $message;
-
-        if ($lineComplete) {
-            $logMessage .= "\n";
-            $this->lineCompleted = true;
-        } else {
-            $this->lineCompleted = false;
-        }
-
-        echo $logMessage;
-
-        $this->log .= $logMessage;
-
-        $this->logNum = $this->logNum + 1;
-
-        if ($this->logNum == $this->logSavePortion) {
-            $this->cronJobRepository->update([
-                'output' => $this->log
-            ]);
-            $this->logNum = 0;
         }
     }
 }
