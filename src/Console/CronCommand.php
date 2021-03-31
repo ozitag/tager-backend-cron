@@ -66,7 +66,7 @@ abstract class CronCommand extends Command
         ]);
     }
 
-    private function onError(\Exception $exception)
+    private function onError(\Throwable $exception)
     {
         $this->cronJobRepository->update([
             'status' => CronJobStatus::Failed,
