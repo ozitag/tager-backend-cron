@@ -95,7 +95,7 @@ abstract class CronCommand extends Command
         try {
             $this->handle();
             $this->onEnd();
-        } catch (\Exception $exception) {
+        }catch (\Throwable $exception) {
             $this->onError($exception);
             throw $exception;
         }
