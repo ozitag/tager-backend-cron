@@ -22,6 +22,9 @@ abstract class CronCommand extends Command
     /** @var TagerCronJob */
     private $model;
 
+    protected $logSavePortion = 100;
+
+    protected bool $saveOutputToDatabase = false;
 
     public function __construct()
     {
@@ -34,9 +37,11 @@ abstract class CronCommand extends Command
 
     protected function onSaveLog($log)
     {
-        $this->cronJobRepository->update([
-            'output' => $log
-        ]);
+        if ($this->saveOutputToDatabase) {
+            $this->cronJobRepository->update([
+                'output' => $log
+            ]);
+        }
     }
 
     private function getCommand()
@@ -62,7 +67,7 @@ abstract class CronCommand extends Command
         $this->cronJobRepository->update([
             'status' => CronJobStatus::Completed,
             'end_at' => DateHelper::getDbDateTime(),
-            'output' => $this->log
+            'output' => $this->saveOutputToDatabase ? $this->log : null
         ]);
     }
 
@@ -71,7 +76,7 @@ abstract class CronCommand extends Command
         $this->cronJobRepository->update([
             'status' => CronJobStatus::Failed,
             'end_at' => DateHelper::getDbDateTime(),
-            'output' => $this->log,
+            'output' => $this->saveOutputToDatabase ? $this->log : null,
             'error' => ExceptionFormatter::getFullExceptionInfo($exception)
         ]);
     }
@@ -95,7 +100,7 @@ abstract class CronCommand extends Command
         try {
             $this->handle();
             $this->onEnd();
-        }catch (\Throwable $exception) {
+        } catch (\Throwable $exception) {
             $this->onError($exception);
             throw $exception;
         }
