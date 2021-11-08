@@ -2,6 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Cron\Http\Jobs;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use OZiTAG\Tager\Backend\Core\Jobs\Job;
@@ -12,15 +13,15 @@ use \OZiTAG\Tager\Backend\Core\Console\Command as TagerCommand;
 
 class CronGetCommandsListJob extends Job
 {
-    public function handle() {
+    public function handle(): Collection {
         $web_execute_available = (bool) Config::get('tager-cron.web_executing.enabled');
         $only_tager_commands = (bool) Config::get('tager-cron.web_executing.only_tager_commands');
 
-        $commands = [];
+        $commands = new Collection();
         $commands_list = Artisan::all();
 
         foreach ($commands_list as $command) {
-            
+
             if ($only_tager_commands) {
                 if (!($command instanceof TagerCommand)) {
                     continue;
@@ -40,7 +41,7 @@ class CronGetCommandsListJob extends Job
             }
 
             if ($web_execute_available || $command instanceof IWebExecutable) {
-                $commands [] = $command;
+                $commands->push($command);
             }
         }
 

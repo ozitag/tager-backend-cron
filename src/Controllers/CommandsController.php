@@ -6,6 +6,7 @@ use OZiTAG\Tager\Backend\Core\Controllers\Controller;
 use OZiTAG\Tager\Backend\Cron\Http\Features\CronCommandsListFeature;
 use OZiTAG\Tager\Backend\Cron\Http\Features\CronExecuteCommandFeature;
 use OZiTAG\Tager\Backend\Cron\Http\Features\CronGetCommandCommonDataFeature;
+use OZiTAG\Tager\Backend\Cron\Repositories\TagerCronJobRepository;
 use OZiTAG\Tager\Backend\Crud\Controllers\CrudController;
 
 class CommandsController extends Controller

@@ -9,7 +9,7 @@ class WebCommandParamDto extends Dto
        protected string $name,
        protected ?array $values = null,
        protected ?string $default = null,
-       protected ?string $function = null,
+       protected ?string $method = null,
        protected ?string $description = null,
     ) {}
 
@@ -34,15 +34,15 @@ class WebCommandParamDto extends Dto
      */
     public function getDefault(): ?string
     {
-        return $this->default;
+        return !$this->method ? $this->default : null;
     }
 
     /**
      * @return string|null
      */
-    public function getFunction(): ?string
+    public function getMethod(): ?string
     {
-        return $this->function;
+        return $this->method;
     }
 
     /**

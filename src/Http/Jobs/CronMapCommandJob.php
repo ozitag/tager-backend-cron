@@ -24,7 +24,7 @@ class CronMapCommandJob extends Job
                 $param->getName(),
                 $values,
                 $this->getDefaultValue((bool) $values, $param),
-                $this->getFunction((bool) $values, $param),
+                $this->getMethod((bool) $values, $param),
                 $this->getDescription((bool) $values, $param),
             );
         }
@@ -42,7 +42,7 @@ class CronMapCommandJob extends Job
     }
 
 
-    protected function getFunction(bool $values_exists, CommandParamDto $param): ?string {
+    protected function getMethod(bool $values_exists, CommandParamDto $param): ?string {
         if ($values_exists) {
             return null;
         }

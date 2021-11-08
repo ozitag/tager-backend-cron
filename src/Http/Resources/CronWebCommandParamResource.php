@@ -13,11 +13,9 @@ class CronWebCommandParamResource extends JsonResource
         $param = $this->resource;
         return [
             'name' => $param->getName(),
-            'default' => !$param->getFunction()
-                ? $param->getDefault()
-                : null,
+            'default' => $param->getDefault(),
             'values' => $param->getValues(),
-            'function' => $param->getFunction(),
+            'method' => $param->getMethod(),
             'description' => $param->getDescription(),
         ];
     }
