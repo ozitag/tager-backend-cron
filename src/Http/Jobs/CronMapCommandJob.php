@@ -30,7 +30,9 @@ class CronMapCommandJob extends Job
         }
 
         return new WebCommandDto(
-            $this->command->getSignature(), $params,
+            $this->command->getSignature(),
+            $this->command->getDescription(),
+            $params,
         );
     }
 

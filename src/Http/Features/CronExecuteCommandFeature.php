@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 use OZiTAG\Tager\Backend\Core\Features\Feature;
 use OZiTAG\Tager\Backend\Cron\Dto\WebCommandDto;
 use OZiTAG\Tager\Backend\Cron\Http\Jobs\CronExecuteCommandJob;
+use OZiTAG\Tager\Backend\Cron\Http\Jobs\CronSaveCommandLogJob;
 use OZiTAG\Tager\Backend\Cron\Http\Operations\CronGetCommandOperation;
 use OZiTAG\Tager\Backend\Cron\Http\Operations\CronPrepareCommandParamsOperation;
 use OZiTAG\Tager\Backend\Cron\Http\Requests\CommandExecuteRequest;
@@ -30,10 +31,17 @@ class CronExecuteCommandFeature extends Feature
             'command' => $command,
             'params' => $request->get('arguments', []),
         ]);
+        
+        $log_id = $this->run(CronSaveCommandLogJob::class, [
+            'command' => $command->getSignature(),
+            'params' => $params,
+            'user_id' => $this->user()->id
+        ]);
 
         $content = $this->run(CronExecuteCommandJob::class, [
             'command' => $command->getSignature(),
             'params' => $params,
+            'log_id' => $log_id,
         ]);
 
         return new CronWebCommandContentResource($content);

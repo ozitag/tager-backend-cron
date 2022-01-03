@@ -2,37 +2,25 @@
 
 namespace OZiTAG\Tager\Backend\Cron\Controllers;
 
-use OZiTAG\Tager\Backend\Cron\Repositories\TagerCronJobRepository;
+use OZiTAG\Tager\Backend\Cron\Http\Resources\CronCommandLogResource;
+use OZiTAG\Tager\Backend\Cron\Repositories\TagerCommandLogRepository;
 use OZiTAG\Tager\Backend\Crud\Controllers\CrudController;
 
-class AdminLogsController extends CrudController
+class CommandsLogsController extends CrudController
 {
     protected bool $hasIndexAction = true;
 
     protected bool $hasViewAction = false;
-
     protected bool $hasStoreAction = false;
-
     protected bool $hasUpdateAction = false;
-
     protected bool $hasDeleteAction = false;
-
     protected bool $hasMoveAction = false;
 
-    public function __construct(TagerCronJobRepository $repository)
+    public function __construct(TagerCommandLogRepository $repository)
     {
         parent::__construct($repository);
 
-        $this->setResourceFields([
-            'id',
-            'command',
-            'class',
-            'status',
-            'begin_at:datetime',
-            'end_at:datetime',
-            'output',
-            'error'
-        ]);
+        $this->setShortResourceClass(CronCommandLogResource::class);
     }
 
 }

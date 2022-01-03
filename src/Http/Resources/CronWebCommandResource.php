@@ -12,6 +12,7 @@ class CronWebCommandResource extends JsonResource
         $command = $this->resource;
         return [
             'signature' => $command->getSignature(),
+            'description' => $command->getDescription(),
             'arguments' => CronWebCommandParamResource::collection($command->getParams()),
         ];
     }

@@ -11,6 +11,7 @@ class TagerCronJob extends Model
 
     protected $table = 'tager_cron_jobs';
 
+    protected array $filterable = ['command'];
     /**
      * The attributes that are mass assignable.
      *
