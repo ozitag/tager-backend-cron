@@ -2,6 +2,8 @@
 
 namespace OZiTAG\Tager\Backend\Cron\Controllers;
 
+use OZiTAG\Tager\Backend\Cron\Http\Resources\CronLogResource;
+use OZiTAG\Tager\Backend\Cron\Http\Resources\CronLogShortResource;
 use OZiTAG\Tager\Backend\Cron\Repositories\TagerCronJobRepository;
 use OZiTAG\Tager\Backend\Crud\Controllers\CrudController;
 
@@ -9,7 +11,7 @@ class AdminLogsController extends CrudController
 {
     protected bool $hasIndexAction = true;
 
-    protected bool $hasViewAction = false;
+    protected bool $hasViewAction = true;
 
     protected bool $hasStoreAction = false;
 
@@ -33,6 +35,9 @@ class AdminLogsController extends CrudController
             'output',
             'error'
         ]);
+
+        $this->setShortResourceClass(CronLogShortResource::class);
+        $this->setFullResourceClass(CronLogResource::class);
     }
 
 }
