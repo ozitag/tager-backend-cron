@@ -9,8 +9,8 @@ class CronLogResource extends CronLogShortResource
 {
     public function getData() {
         return array_merge(parent::getData(), [
-            'command' => $this->command,
             'output' => $this->output,
+            'class' => $this->class,
             'error' => $this->error,
         ]);
     }

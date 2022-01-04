@@ -11,7 +11,7 @@ class CronLogShortResource extends JsonResource
     public function getData() {
         return [
             'id' => $this->id,
-            'class' => $this->class,
+            'command' => $this->command,
             'status' => $this->status,
             'begin_at' => $this->begin_at 
                 ? Carbon::parse($this->begin_at)->toIso8601ZuluString()
