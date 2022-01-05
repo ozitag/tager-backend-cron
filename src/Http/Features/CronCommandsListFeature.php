@@ -3,14 +3,14 @@
 namespace OZiTAG\Tager\Backend\Cron\Http\Features;
 
 use OZiTAG\Tager\Backend\Core\Features\Feature;
-use OZiTAG\Tager\Backend\Cron\Http\Operations\CronGetCommandsListOperation;
-use OZiTAG\Tager\Backend\Cron\Http\Resources\CronWebCommandResource;
+use OZiTAG\Tager\Backend\Cron\Http\Resources\CronCommandResource;
+use OZiTAG\Tager\Backend\Cron\Repositories\TagerCronJobRepository;
 
 class CronCommandsListFeature extends Feature
 {
-    public function handle() {
-        $commands = $this->run(CronGetCommandsListOperation::class);
+    public function handle(TagerCronJobRepository $repository) {
+        $commands = $repository->getCommandsForSearch();
         
-        return CronWebCommandResource::collection($commands);
+        return CronCommandResource::collection($commands);
     }
 }

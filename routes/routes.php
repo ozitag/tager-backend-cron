@@ -12,6 +12,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['passport:administrators', '
         ->middleware([
             AccessControlMiddleware::scopes(CronScope::CRON_LOGS->value)
         ]);
+    Route::get('/cron/logs/commands', [AdminLogsController::class, 'commands'])
+        ->middleware([
+            AccessControlMiddleware::scopes(CronScope::CRON_LOGS->value)
+        ]);
     Route::get('/cron/logs/{id}', [AdminLogsController::class, 'view'])
         ->middleware([
             AccessControlMiddleware::scopes(CronScope::CRON_LOGS_DETAILS->value)

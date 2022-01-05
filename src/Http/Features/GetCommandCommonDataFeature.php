@@ -10,7 +10,7 @@ use OZiTAG\Tager\Backend\Cron\Http\Operations\CronGetCommandOperation;
 use OZiTAG\Tager\Backend\Cron\Http\Requests\CommandCommandDataRequest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class CronGetCommandCommonDataFeature extends Feature
+class GetCommandCommonDataFeature extends Feature
 {
     public function handle(CommandCommandDataRequest $request) {
         /** @var ?Command $command */

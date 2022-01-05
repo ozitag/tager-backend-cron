@@ -19,7 +19,17 @@ class TagerCommandLogRepository extends EloquentRepository implements ISearchabl
     {
         switch ($key) {
             case 'signature':
-                $builder->where('signature', $value);
+                $builder->where('signature', '=', $value);
+                break;
+            case 'status':
+                $builder->whereIn('status', explode(',', strtoupper($value)));
+                break;
+            case 'date-from':
+                $builder->where('created_at', '>=', $value);
+                break;
+            case 'date-to':
+                $builder->where('created_at', '<=' , $value);
+                break;
         }
         return $builder;
     }

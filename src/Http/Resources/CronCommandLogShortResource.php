@@ -20,7 +20,7 @@ class CronCommandLogShortResource extends JsonResource
                 'name' => $this->administrator->name ?? ''
             ] : null,
             'execution_time' => $this->execution_time,
-            'status' => $this->status,
+            'status' => strtoupper($this->status),
             'hasoutput' => !!$this->output,
         ];
     }

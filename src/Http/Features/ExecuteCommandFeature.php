@@ -15,7 +15,7 @@ use OZiTAG\Tager\Backend\Cron\Http\Resources\CronWebCommandContentResource;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class CronExecuteCommandFeature extends Feature
+class ExecuteCommandFeature extends Feature
 {
     public function handle(CommandExecuteRequest $request) {
         /** @var ?WebCommandDto $command */

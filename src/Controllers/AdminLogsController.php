@@ -2,6 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Cron\Controllers;
 
+use OZiTAG\Tager\Backend\Cron\Http\Features\CronCommandsListFeature;
 use OZiTAG\Tager\Backend\Cron\Http\Resources\CronLogResource;
 use OZiTAG\Tager\Backend\Cron\Http\Resources\CronLogShortResource;
 use OZiTAG\Tager\Backend\Cron\Repositories\TagerCronJobRepository;
@@ -40,4 +41,7 @@ class AdminLogsController extends CrudController
         $this->setFullResourceClass(CronLogResource::class);
     }
 
+    public function commands() {
+        return $this->serve(CronCommandsListFeature::class);
+    }
 }
