@@ -42,6 +42,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['passport:administrators', '
             ->middleware([
                 AccessControlMiddleware::scopes(CronScope::COMMANDS_LOGS_DETAILS->value)
             ]);
+        Route::get('/{signature}', [CommandsController::class, 'view'])
+            ->middleware([
+                AccessControlMiddleware::scopes(CronScope::COMMANDS->value)
+            ]);
     });
 
 });

@@ -46,7 +46,7 @@ SQL );
         $builder = $builder ? $builder : $this->model;
         return $builder
             ->where('command', 'LIKE', "%$query%")
-            ->where('class', 'LIKE', "%$query%")
+            ->orWhere('class', 'LIKE', "%$query%")
             ->orWhere('output', 'LIKE', "%$query%")
             ->orWhere('error', 'LIKE', "%$query%");
     }
