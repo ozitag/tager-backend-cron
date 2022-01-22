@@ -10,18 +10,26 @@ use OZiTAG\Tager\Backend\Cron\Repositories\TagerCommandLogRepository;
 class CronUpdateCommandLogJob extends Job
 {
     public function __construct(
-        private int $log_id,
+        private int                $log_id,
         private CronCommandsStatus $status,
-        private ?string $output,
-        private ?float $microtime,
-    ) {}
+        private ?string            $output,
+        private ?float             $microtime,
+    )
+    {
+    }
 
-    public function handle(TagerCommandLogRepository $repository): ?int {
+    public function handle(TagerCommandLogRepository $repository): ?int
+    {
         $repository->setById($this->log_id);
-        return $repository->fillAndSave([
-            'output' => $this->output,
-            'status' => $this->status->value,
-            'execution_time' => $this->microtime,
-        ])->id ?? null;
+
+        try {
+            return $repository->fillAndSave([
+                    'output' => $this->output,
+                    'status' => $this->status->value,
+                    'execution_time' => $this->microtime,
+                ])->id ?? null;
+        } catch (\Exception $exception) {
+
+        }
     }
 }
