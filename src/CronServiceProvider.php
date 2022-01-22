@@ -51,12 +51,8 @@ class CronServiceProvider extends EventServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'tager-cron');
 
         TagerScopes::registerGroup(__('tager-cron::scopes.group'), [
-            CronScope::COMMANDS->value => __('tager-cron::scopes.commands_list'),
-            CronScope::COMMAND_EXEC->value => __('tager-cron::scopes.command_execute'),
-            CronScope::COMMANDS_LOGS->value => __('tager-cron::scopes.commands_logs'),
-            CronScope::COMMANDS_LOGS_DETAILS->value => __('tager-cron::scopes.command_log_details'),
-            CronScope::CRON_LOGS->value => __('tager-cron::scopes.cron_logs'),
-            CronScope::CRON_LOGS_DETAILS->value => __('tager-cron::scopes.cron_log_details'),
+            CronScope::Cron->value => __('tager-cron::scopes.cron'),
+            CronScope::Commands->value => __('tager-cron::scopes.commands'),
         ]);
         
         Command::mixin(new CommandMixin());
