@@ -2,11 +2,9 @@
 
 namespace OZiTAG\Tager\Backend\Cron\Enums;
 
-use OZiTAG\Tager\Backend\Core\Enums\Enum;
-
-class CronJobStatus extends Enum
+enum CronJobStatus: string
 {
-    const Started = 'STARTED';
-    const Completed = 'COMPLETED';
-    const Failed = 'FAILED';
+    case Started = 'STARTED';
+    case Completed = 'COMPLETED';
+    case Failed = 'FAILED';
 }

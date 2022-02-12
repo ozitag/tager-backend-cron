@@ -20,7 +20,7 @@ class CronSaveCommandLogJob extends Job
             'signature' => $this->command,
             'arguments' => json_encode($this->params),
             'user_id' => $this->user_id,
-            'status' => CronCommandsStatus::STARTED->value,
+            'status' => CronCommandsStatus::Started->value,
         ])->id ?? null;
     }
 }

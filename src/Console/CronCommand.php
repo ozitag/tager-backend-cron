@@ -55,7 +55,7 @@ abstract class CronCommand extends Command
         $this->model = $this->cronJobRepository->fillAndSave([
             'class' => static::class,
             'command' => $this->getCommand(),
-            'status' => CronJobStatus::Started,
+            'status' => CronJobStatus::Started->value,
             'begin_at' => DateHelper::getDbDateTime()
         ]);
 
@@ -65,7 +65,7 @@ abstract class CronCommand extends Command
     private function onEnd()
     {
         $this->cronJobRepository->update([
-            'status' => CronJobStatus::Completed,
+            'status' => CronJobStatus::Completed->value,
             'end_at' => DateHelper::getDbDateTime(),
             'output' => $this->saveOutputToDatabase ? $this->log : null
         ]);
@@ -74,7 +74,7 @@ abstract class CronCommand extends Command
     private function onError(\Throwable $exception)
     {
         $this->cronJobRepository->update([
-            'status' => CronJobStatus::Failed,
+            'status' => CronJobStatus::Failed->value,
             'end_at' => DateHelper::getDbDateTime(),
             'output' => $this->saveOutputToDatabase ? $this->log : null,
             'error' => ExceptionFormatter::getFullExceptionInfo($exception)

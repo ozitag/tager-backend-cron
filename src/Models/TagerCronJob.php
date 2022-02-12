@@ -3,28 +3,27 @@
 namespace OZiTAG\Tager\Backend\Cron\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use OZiTAG\Tager\Backend\Core\Models\TModel;
 
-class TagerCronJob extends Model
+/**
+ * @property string $class
+ * @property string $command
+ * @property string $status
+ * @property string $begin_at
+ * @property string $end_at
+ * @property string $output
+ * @property string $error
+ */
+class TagerCronJob extends TModel
 {
     public $timestamps = false;
 
     protected $table = 'tager_cron_jobs';
 
     protected array $filterable = ['command'];
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
     protected $fillable = [
-        'class',
-        'command',
-        'status',
-        'begin_at',
-        'end_at',
-        'output',
-        'error'
+        'class', 'command', 'status', 'begin_at', 'end_at', 'output', 'error'
     ];
 
     protected static function boot()

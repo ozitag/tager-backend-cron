@@ -16,8 +16,8 @@ class TagerCommandFinishedListener
             new CronUpdateCommandLogJob(
                 $event->getCommandId(),
                 $event instanceof TagerCommandFailed
-                    ? CronCommandsStatus::FAILED
-                    : CronCommandsStatus::FINISHED,
+                    ? CronCommandsStatus::Failed
+                    : CronCommandsStatus::Finished,
                 $event->getOutput(),
                 $event->getMicrotime(),
             )
