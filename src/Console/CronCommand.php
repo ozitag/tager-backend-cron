@@ -9,20 +9,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Support\Facades\App;
 use OZiTAG\Tager\Backend\Core\Console\Command;
 use OZiTAG\Tager\Backend\Cron\Enums\CronJobStatus;
-use OZiTAG\Tager\Backend\Cron\Models\TagerCronJob;
 use OZiTAG\Tager\Backend\Cron\Repositories\TagerCronJobRepository;
 
 abstract class CronCommand extends Command
 {
     abstract function handle();
 
-    /** @var TagerCronJobRepository */
-    private $cronJobRepository;
+    private TagerCronJobRepository $cronJobRepository;
 
-    /** @var TagerCronJob */
-    private $model;
-
-    protected $logSavePortion = 100;
+    protected int $logSavePortion = 100;
 
     protected bool $saveOutputToDatabase = false;
 
