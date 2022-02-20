@@ -1,17 +1,18 @@
 <?php
+
 namespace OZiTAG\Tager\Backend\Cron\Dto;
 
-use \OZiTAG\Tager\Backend\Backup\Dto\Dto;
-
-class WebCommandParamDto extends Dto
+class WebCommandParamDto
 {
     public function __construct(
-       protected string $name,
-       protected ?array $values = null,
-       protected ?string $default = null,
-       protected ?string $method = null,
-       protected ?string $description = null,
-    ) {}
+        protected string  $name,
+        protected ?array  $values = null,
+        protected ?string $default = null,
+        protected ?string $method = null,
+        protected ?string $description = null,
+    )
+    {
+    }
 
     /**
      * @return string
