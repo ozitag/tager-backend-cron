@@ -2,7 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Cron\Models;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use OZiTAG\Tager\Backend\Core\Models\TModel;
 
 /**

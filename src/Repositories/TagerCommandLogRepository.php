@@ -2,7 +2,7 @@
 
 namespace OZiTAG\Tager\Backend\Cron\Repositories;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use OZiTAG\Tager\Backend\Core\Repositories\EloquentRepository;
 use OZiTAG\Tager\Backend\Cron\Models\TagerCommandLog;
 use OZiTAG\Tager\Backend\Core\Repositories\IFilterable;
