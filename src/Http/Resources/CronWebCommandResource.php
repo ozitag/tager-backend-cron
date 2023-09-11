@@ -10,6 +10,7 @@ class CronWebCommandResource extends JsonResource
     public function getData() {
         /** @var WebCommandDto $command */
         $command = $this->resource;
+        
         return [
             'signature' => $command->getSignature(),
             'description' => $command->getDescription(),
