@@ -21,6 +21,8 @@ abstract class CronCommand extends Command
 
     protected bool $saveOutputToDatabase = false;
 
+    private ?float $startAt = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -55,13 +57,16 @@ abstract class CronCommand extends Command
         ]);
 
         $this->cronJobRepository->set($this->model);
+
+        $this->startAt = microtime(true);
     }
 
     private function onEnd()
     {
         $this->cronJobRepository->update([
             'status' => CronJobStatus::Completed->value,
-            'end_at' => DateHelper::getDbDateTime(),
+            'end_at' =>  DateHelper::getDbDateTime(),
+            'duration' => microtime(true) - $this->startAt
         ]);
     }
 
@@ -70,6 +75,7 @@ abstract class CronCommand extends Command
         $this->cronJobRepository->update([
             'status' => CronJobStatus::Failed->value,
             'end_at' => DateHelper::getDbDateTime(),
+            'duration' => microtime(true) - $this->startAt,
             'error' => ExceptionFormatter::getFullExceptionInfo($exception)
         ]);
     }
