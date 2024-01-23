@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTagerCommandsLogs extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create('tager_commands_logs', function (Blueprint $table) {
@@ -29,4 +28,4 @@ class CreateTagerCommandsLogs extends Migration
     {
         Schema::dropIfExists('cron_job_audits');
     }
-}
+};
