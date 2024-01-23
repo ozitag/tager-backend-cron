@@ -23,7 +23,7 @@ class TagerCronJob extends TModel
     protected array $filterable = ['command'];
 
     protected $fillable = [
-        'class', 'command', 'status', 'begin_at', 'end_at', 'output', 'error'
+        'class', 'command', 'status', 'begin_at', 'end_at',  'error'
     ];
 
     protected static function boot()

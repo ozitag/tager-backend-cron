@@ -62,7 +62,6 @@ abstract class CronCommand extends Command
         $this->cronJobRepository->update([
             'status' => CronJobStatus::Completed->value,
             'end_at' => DateHelper::getDbDateTime(),
-            'output' => $this->saveOutputToDatabase ? $this->log : null
         ]);
     }
 
@@ -71,7 +70,6 @@ abstract class CronCommand extends Command
         $this->cronJobRepository->update([
             'status' => CronJobStatus::Failed->value,
             'end_at' => DateHelper::getDbDateTime(),
-            'output' => $this->saveOutputToDatabase ? $this->log : null,
             'error' => ExceptionFormatter::getFullExceptionInfo($exception)
         ]);
     }
