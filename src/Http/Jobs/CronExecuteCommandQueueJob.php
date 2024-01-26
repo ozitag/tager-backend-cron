@@ -22,7 +22,6 @@ class CronExecuteCommandQueueJob extends QueueJob
         private ?int $log_id,
     ) {
         $this->connection = config('tager-cron.queue.connection');
-        parent::__construct();
     }
 
     public function handle(TagerCommandLogRepository $tagerCommandLogRepository): ?string {
