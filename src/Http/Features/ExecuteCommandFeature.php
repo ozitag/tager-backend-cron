@@ -5,8 +5,10 @@ namespace OZiTAG\Tager\Backend\Cron\Http\Features;
 use Illuminate\Console\BufferedConsoleOutput;
 use Illuminate\Support\Facades\Artisan;
 use OZiTAG\Tager\Backend\Core\Features\Feature;
+use OZiTAG\Tager\Backend\Core\Resources\SuccessResource;
 use OZiTAG\Tager\Backend\Cron\Dto\WebCommandDto;
 use OZiTAG\Tager\Backend\Cron\Http\Jobs\CronExecuteCommandJob;
+use OZiTAG\Tager\Backend\Cron\Http\Jobs\CronExecuteCommandQueueJob;
 use OZiTAG\Tager\Backend\Cron\Http\Jobs\CronSaveCommandLogJob;
 use OZiTAG\Tager\Backend\Cron\Http\Operations\CronGetCommandOperation;
 use OZiTAG\Tager\Backend\Cron\Http\Operations\CronPrepareCommandParamsOperation;
@@ -31,19 +33,30 @@ class ExecuteCommandFeature extends Feature
             'command' => $command,
             'params' => $request->get('arguments', []),
         ]);
-        
+
         $log_id = $this->run(CronSaveCommandLogJob::class, [
             'command' => $command->getSignature(),
             'params' => $params,
-            'user_id' => $this->user()->id
+            'user_id' => $this->user()->id,
+            'async' => $request->async
         ]);
 
-        $content = $this->run(CronExecuteCommandJob::class, [
-            'command' => $command->getSignature(),
-            'params' => $params,
-            'log_id' => $log_id,
-        ]);
+        if($request->async){
+            $content = $this->runInQueue(CronExecuteCommandQueueJob::class, [
+                'command' => $command->getSignature(),
+                'params' => $params,
+                'log_id' => $log_id,
+            ], config('tager-cron.queue.name'));
 
-        return new CronWebCommandContentResource($content);
+            return new SuccessResource();
+        } else {
+            $content = $this->runNow(CronExecuteCommandJob::class, [
+                'command' => $command->getSignature(),
+                'params' => $params,
+                'log_id' => $log_id,
+            ]);
+
+            return new CronWebCommandContentResource($content);
+        }
     }
 }

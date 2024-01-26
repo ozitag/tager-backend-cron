@@ -11,18 +11,18 @@ use OZiTAG\Tager\Backend\Cron\Events\TagerCommandFailed;
 use OZiTAG\Tager\Backend\Cron\Events\TagerCommandFinished;
 use OZiTAG\Tager\Backend\Cron\Repositories\TagerCommandLogRepository;
 
-class CronExecuteCommandJob extends Job
+class CronExecuteCommandQueueJob extends QueueJob
 {
     private $has_errors = false;
     private $started_time = false;
-
 
     public function __construct(
         private string $command,
         private array $params,
         private ?int $log_id,
     ) {
-
+        $this->connection = config('tager-cron.queue.connection');
+        parent::__construct();
     }
 
     public function handle(TagerCommandLogRepository $tagerCommandLogRepository): ?string {

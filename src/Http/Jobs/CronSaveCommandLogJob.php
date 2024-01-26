@@ -13,6 +13,7 @@ class CronSaveCommandLogJob extends Job
         private string $command,
         private array $params,
         private int $user_id,
+        private bool $async,
     ) {}
 
     public function handle(TagerCommandLogRepository $repository): ?int {
@@ -20,7 +21,7 @@ class CronSaveCommandLogJob extends Job
             'signature' => $this->command,
             'arguments' => json_encode($this->params),
             'user_id' => $this->user_id,
-            'status' => CronCommandsStatus::Started->value,
+            'status' => $this->async ? CronCommandsStatus::Waiting->value : CronCommandsStatus::Started->value,
         ])->id ?? null;
     }
 }

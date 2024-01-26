@@ -59,6 +59,7 @@ abstract class CronCommand extends Command
         $this->cronJobRepository->set($this->model);
 
         $this->startAt = microtime(true);
+
     }
 
     private function onEnd()

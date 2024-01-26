@@ -2,6 +2,8 @@
 
 namespace OZiTAG\Tager\Backend\Cron\Controllers;
 
+use GuzzleHttp\Exception\ServerException;
+use Illuminate\Support\Facades\Log;
 use OZiTAG\Tager\Backend\Core\Controllers\Controller;
 use OZiTAG\Tager\Backend\Cron\Http\Features\CommandsListFeature;
 use OZiTAG\Tager\Backend\Cron\Http\Features\CommandsViewFeature;
@@ -15,7 +17,7 @@ class CommandsController extends Controller
     public function list() {
         return $this->serve(CommandsListFeature::class);
     }
-    
+
     public function view(string $signature) {
         return $this->serve(CommandsViewFeature::class, [
             'signature' => $signature,
@@ -23,7 +25,7 @@ class CommandsController extends Controller
     }
 
     public function execute() {
-        return $this->serve(ExecuteCommandFeature::class);
+            return $this->serve(ExecuteCommandFeature::class);
     }
 
     public function common() {
