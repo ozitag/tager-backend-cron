@@ -88,7 +88,7 @@ abstract class CronCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         return (int)$this->laravel->call([$this, 'process']);
     }
