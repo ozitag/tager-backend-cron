@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('tager_cron_jobs', function (Blueprint $table) {
-            $table->unsignedDecimal('duration')->after('end_at')->nullable();
+            $table->double('duration')->after('end_at')->nullable();
         });
     }
 
