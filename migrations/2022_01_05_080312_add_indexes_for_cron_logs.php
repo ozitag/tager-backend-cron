@@ -13,16 +13,10 @@ return new class extends Migration {
      */
     public function up()
     {
-        DB::commit();
-        $sql = <<<EOD
-            ALTER TABLE tager_cron_jobs ADD INDEX tager_cron_jobs_status__index (status), ALGORITHM=INPLACE, LOCK=NONE;
-EOD;
-        DB::statement($sql);
-        DB::commit();
-        $sql = <<<EOD
-            ALTER TABLE tager_cron_jobs ADD INDEX tager_cron_jobs_command__index (command), ALGORITHM=INPLACE, LOCK=NONE;
-EOD;
-        DB::statement($sql);
+        Schema::table('tager_cron_jobs', function (Blueprint $table) {
+            $table->index('status');
+            $table->index('command');
+        });
     }
 
     /**
